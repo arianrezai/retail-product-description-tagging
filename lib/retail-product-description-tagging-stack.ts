@@ -18,13 +18,18 @@ export class ProductDescriptionTaggingStack extends cdk.Stack {
       },
     });
 
-    // Grant the Lambda function permission to access Amazon Bedrock
+    // Grant the Lambda function permission to access Amazon Bedrock and Amazon S3
     lambdaFunction.role?.attachInlinePolicy(
       new iam.Policy(this, 'BedrockAccess', {
         statements: [
           new iam.PolicyStatement({
             effect: iam.Effect.ALLOW,
             actions: ['bedrock:*'],
+            resources: ['*'],
+          }),
+          new iam.PolicyStatement({
+            effect: iam.Effect.ALLOW,
+            actions: ['s3:*'],
             resources: ['*'],
           }),
         ],
